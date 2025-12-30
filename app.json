@@ -1,5 +1,6 @@
 {
   "expo": {
+    "backgroundColor": "#121212",
     "name": "BandwidthTaskApp",
     "slug": "BandwidthTaskApp",
     "version": "1.0.0",
@@ -23,7 +24,8 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "backgroundColor": "#121212"
     },
     "plugins": [
       "expo-router",

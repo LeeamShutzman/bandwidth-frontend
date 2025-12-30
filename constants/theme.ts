@@ -11,6 +11,8 @@ const tintColorDark = '#fff';
 export const Colors = {
   light: {
     text: '#11181C',
+    loginText: '#000000',
+    placeHolder: '#999999',
     background: '#fff',
     tint: tintColorLight,
     icon: '#687076',
@@ -19,6 +21,8 @@ export const Colors = {
   },
   dark: {
     text: '#ECEDEE',
+    loginText: '#ffffff',
+    placeholder: '#888888',
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',

@@ -1,10 +1,11 @@
 import { Platform } from 'react-native';
 
-// Replace with your EC2 Public IP or Domain Name
-const DEV_IP = '3.134.96.64'; 
+// Use your domain name now that SSL is active!
+const DOMAIN = 'bandwidth.ddns.net'; 
 
 export const BASE_URLS = {
-    auth: Platform.OS === 'web' ? '/api/v1/auth' : `http://${DEV_IP}/api/v1/auth`,
-    tasks: Platform.OS === 'web' ? '/api/v1/tasks' : `http://${DEV_IP}/api/v1/tasks`,
-    user: Platform.OS === 'web' ? '/api/v1/user' : `http://${DEV_IP}/api/v1/user`,
+    // We remove the specific /api/... suffix here to make it cleaner in the screens
+    auth: Platform.OS === 'web' ? '/api/v1/auth' : `https://${DOMAIN}/api/v1/auth`,
+    tasks: Platform.OS === 'web' ? '/api/v1/tasks' : `https://${DOMAIN}/api/v1/tasks`,
+    user: Platform.OS === 'web' ? '/api/v1/users' : `https://${DOMAIN}/api/v1/users`,
 };

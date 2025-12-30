@@ -20,7 +20,7 @@ import { BASE_URLS } from '../constants/config';
 
 const AUTH_API_URL = `${BASE_URLS.auth}/login`;
 
-const LoginScreen = () => {
+const LoginScreen = ({ onShowSignUp }) => {
     const { theme } = useTheme();
     const { login } = useAuth(); // Now this will work!
     const insets = useSafeAreaInsets();
@@ -36,7 +36,7 @@ const LoginScreen = () => {
             setError("Please enter both username and password.");
             return;
         }
-        
+
         setError(null);
         setLoading(true);
         Keyboard.dismiss(); // Close keyboard on press
@@ -53,8 +53,8 @@ const LoginScreen = () => {
                 setError('Login failed: Invalid response from server.');
             }
         } catch (err) {
-            const errorMessage = err.response?.data?.message 
-                ? err.response.data.message 
+            const errorMessage = err.response?.data?.message
+                ? err.response.data.message
                 : 'Authentication failed. Check credentials or server connection.';
             setError(errorMessage);
         } finally {
@@ -65,9 +65,9 @@ const LoginScreen = () => {
     return (
         <View style={[styles.container, { backgroundColor: theme.background }]}>
             {/* 1. Sibling Background: Catches clicks outside inputs without stealing focus */}
-            <Pressable 
-                style={StyleSheet.absoluteFill} 
-                onPress={Keyboard.dismiss} 
+            <Pressable
+                style={StyleSheet.absoluteFill}
+                onPress={Keyboard.dismiss}
             />
 
             <KeyboardAvoidingView
@@ -117,6 +117,15 @@ const LoginScreen = () => {
                         ) : (
                             <Text style={styles.buttonText}>LOG IN</Text>
                         )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={onShowSignUp}
+                        style={{ marginTop: 20 }}
+                    >
+                        <Text style={{ textAlign: 'center', color: '#666' }}>
+                            Don't have an account? <Text style={{ color: INDIGO, fontWeight: 'bold' }}>Sign Up</Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>

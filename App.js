@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react'; // Added useState
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-// Local Imports with UPDATED paths
+// Local Imports
 import Header from './components/Header';
 import { INDIGO } from './constants/colors';
-import { AuthProvider, useAuth } from './context/AuthContext'; // <-- Path updated
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
-import LoginScreen from './screens/LoginScreen'; // <-- Path updated
-import TaskGrid from './screens/TaskGrid'; // <-- Path updated
+import LoginScreen from './screens/LoginScreen'; 
+import SignUpScreen from './screens/SignUpScreen'; // 1. IMPORT THE NEW SCREEN
+import TaskGrid from './screens/TaskGrid'; 
 
-// Main App component wrapped in providers
 export default function App() {
   return (
     <SafeAreaProvider>
-      {/* 1. ThemeProvider provides the styling context */}
       <ThemeProvider>
-        {/* 2. AuthProvider provides the login state and JWT handling context */}
         <AuthProvider>
           <AuthRouter /> 
         </AuthProvider>
@@ -24,11 +22,13 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+
 const AuthRouter = () => {
-    // CHANGE THIS: Destructure userInfo, not token
     const { userInfo, isLoading } = useAuth(); 
     
-    // Show a full-screen loading spinner
+    // 2. STATE TO TOGGLE BETWEEN LOGIN AND SIGNUP
+    const [isSigningUp, setIsSigningUp] = useState(false);
+    
     if (isLoading) {
         return (
             <View style={styles.loadingContainer}>
@@ -37,17 +37,23 @@ const AuthRouter = () => {
         );
     }
     
-    // CHANGE THIS: Check if userInfo is null
+    // 3. LOGIC FOR UNAUTHENTICATED USERS
     if (!userInfo) {
         return (
             <>
                 <Header /> 
-                <LoginScreen />
+                {isSigningUp ? (
+                    // Show Sign Up and provide a way to go back
+                    <SignUpScreen onBackToLogin={() => setIsSigningUp(false)} />
+                ) : (
+                    // Show Login and provide a way to switch to Sign Up
+                    <LoginScreen onShowSignUp={() => setIsSigningUp(true)} />
+                )}
             </>
         );
     }
     
-    // If userInfo exists (meaning login was successful), render TaskGrid
+    // If userInfo exists, render TaskGrid
     return (
         <>
             <Header />
@@ -56,7 +62,6 @@ const AuthRouter = () => {
     );
 };
 
-// Styles for the loading state
 const styles = StyleSheet.create({
     loadingContainer: {
         flex: 1,

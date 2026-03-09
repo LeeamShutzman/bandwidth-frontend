@@ -71,11 +71,10 @@ const TaskForm = ({ isVisible, onClose, onSave, onDelete, initialTask = null }) 
           style={styles.keyboardContainer}
           pointerEvents="box-none" // Allows clicks to pass through container to the background Pressable
         >
-          <View 
+          <Pressable 
             style={[styles.modalContent, { backgroundColor: theme.cardBackground }]}
-            // Prevent clicks inside the card from triggering the background Pressable
-            onStartShouldSetResponder={() => true} 
-            onTouchEnd={(e) => e.stopPropagation()} 
+            // On web, we stop propagation to prevent the background Pressable from firing
+            onPress={(e) => Platform.OS === 'web' && e.stopPropagation()}
           >
             <Text style={[styles.modalTitle, { color: theme.text }]}>
               {isEdit ? 'Edit Task' : 'Add New Task'}
@@ -141,7 +140,7 @@ const TaskForm = ({ isVisible, onClose, onSave, onDelete, initialTask = null }) 
                 </TouchableOpacity>
               </View>
             )}
-          </View>
+          </Pressable>
         </KeyboardAvoidingView>
       </View>
     </Modal>
